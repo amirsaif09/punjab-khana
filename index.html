@@ -35,7 +35,7 @@ body {
     --border-gold: #B8960C;
 }
 
-/* HEADER - mobile optimized */
+/* HEADER - with hamburger */
 header {
     position: sticky;
     top: 0;
@@ -43,12 +43,10 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 18px;
-    z-index: 1000;
+    padding: 12px 20px;
+    z-index: 1001;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
     border-bottom: 2px solid var(--royal-gold);
-    flex-wrap: wrap;
-    gap: 8px;
 }
 
 header h1 {
@@ -66,28 +64,120 @@ header h1 i {
     margin-right: 6px;
 }
 
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
+/* Hamburger Button */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.8rem;
+    color: var(--royal-gold);
+    transition: 0.2s;
+    z-index: 1002;
+    padding: 5px;
 }
 
-nav a {
+.hamburger:hover {
+    color: #F5C542;
+    transform: scale(1.05);
+}
+
+/* Navigation - Desktop */
+.desktop-nav {
+    display: flex;
+    gap: 6px;
+}
+
+.desktop-nav a, .mobile-nav a {
     color: #F2E1B3;
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.8rem;
-    padding: 6px 10px;
+    font-size: 0.85rem;
+    padding: 8px 14px;
     transition: 0.2s;
     border-radius: 40px;
 }
 
-nav a:hover {
+.desktop-nav a:hover {
     color: var(--royal-gold);
     background: rgba(212, 175, 55, 0.15);
 }
 
-/* HERO - responsive height */
+/* Mobile Navigation Overlay */
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 75%;
+    max-width: 280px;
+    height: 100vh;
+    background: #0A0A0A;
+    border-left: 3px solid var(--royal-gold);
+    z-index: 1002;
+    display: flex;
+    flex-direction: column;
+    padding: 80px 25px 30px;
+    gap: 20px;
+    transition: right 0.35s ease-in-out;
+    box-shadow: -8px 0 30px rgba(0,0,0,0.9);
+}
+
+.mobile-nav.active {
+    right: 0;
+}
+
+.mobile-nav a {
+    font-size: 1.15rem;
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    text-align: left;
+    display: block;
+}
+
+.mobile-nav a:hover {
+    background: rgba(212, 175, 55, 0.2);
+    color: var(--royal-gold);
+    border-radius: 40px;
+    padding-left: 20px;
+}
+
+/* Close button inside mobile nav */
+.close-nav {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--royal-gold);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.close-nav:hover {
+    color: #ffd966;
+}
+
+/* Overlay backdrop */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(5px);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* HERO */
 .hero {
     min-height: 70vh;
     background: linear-gradient(115deg, rgba(0,0,0,0.88), rgba(20,15,5,0.75)), url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092') center/cover no-repeat;
@@ -161,7 +251,7 @@ section h2:after {
     font-weight: 500;
 }
 
-/* ====== FEATURED ITEMS SECTION - 4 CARDS WITH IMAGES ====== */
+/* FEATURED SECTION */
 .featured-section {
     background: linear-gradient(180deg, #0A0A0A, #0F0E0A);
 }
@@ -368,7 +458,7 @@ footer {
     justify-content: center;
     box-shadow: 0 10px 22px rgba(0, 0, 0, 0.5);
     transition: all 0.3s ease;
-    z-index: 9999;
+    z-index: 999;
     text-decoration: none;
 }
 
@@ -382,7 +472,34 @@ footer {
     background-color: #128C7E;
 }
 
-/* touch-friendly button */
+/* ========== MOBILE RESPONSIVE + HAMBURGER ========== */
+@media (max-width: 768px) {
+    .desktop-nav {
+        display: none;
+    }
+    .hamburger {
+        display: block;
+    }
+    header {
+        padding: 12px 18px;
+    }
+    .featured-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+    }
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    .card {
+        padding: 18px 8px;
+        font-size: 0.85rem;
+    }
+    .featured-img {
+        height: 180px;
+    }
+}
+
 @media (max-width: 480px) {
     .whatsapp-float {
         width: 52px;
@@ -393,51 +510,18 @@ footer {
     .whatsapp-float i {
         font-size: 28px;
     }
-    .featured-img {
-        height: 170px;
-    }
-    .featured-info h3 {
-        font-size: 1.3rem;
-    }
-    .contact-box p {
-        font-size: 0.8rem;
-        gap: 8px;
-    }
     section {
         padding: 45px 16px;
     }
-    .card {
-        padding: 18px 10px;
-        font-size: 0.9rem;
+    .menu-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
     }
 }
 
-/* tablet optimization */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .featured-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .menu-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-/* desktop large */
-@media (min-width: 1025px) {
-    .featured-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    .menu-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    .whatsapp-float {
-        width: 66px;
-        height: 66px;
-        bottom: 30px;
-        right: 30px;
-    }
-    .whatsapp-float i {
-        font-size: 36px;
+@media (min-width: 769px) {
+    .mobile-nav, .nav-overlay, .close-nav, .hamburger {
+        display: none;
     }
 }
 
@@ -461,7 +545,14 @@ footer {
 
 <header>
     <h1><i class="fas fa-utensils"></i> Punjabi Khana</h1>
-    <nav>
+    
+    <!-- Hamburger Button (visible only on mobile) -->
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
         <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#featured">Specials</a>
@@ -470,6 +561,20 @@ footer {
         <a href="#contact">Contact</a>
     </nav>
 </header>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-nav" id="mobileNav">
+    <button class="close-nav" id="closeNavBtn" aria-label="Close Menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="#home" class="mobile-link">Home</a>
+    <a href="#about" class="mobile-link">About</a>
+    <a href="#featured" class="mobile-link">Specials</a>
+    <a href="#menu" class="mobile-link">Menu</a>
+    <a href="#location" class="mobile-link">Location</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+</div>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <!-- Hero Section -->
 <section id="home" class="hero">
@@ -498,7 +603,7 @@ footer {
         </div>
         <!-- Card 2 - Dal Makhani -->
         <div class="featured-card">
-            <img class="featured-img" src="https://images.unsplash.com/photo-1546173159-315724a1b8d1?w=500&h=400&fit=crop" alt="Dal Makhani" loading="lazy">
+            <img class="featured-img" src="https://c.ndtvimg.com/2024-02/ohpng4i_dal-makhani_625x300_14_February_24.jpg" alt="Dal Makhani" loading="lazy">
             <div class="featured-info">
                 <h3>Dal Makhani</h3>
                 <p>Black lentils simmered overnight with butter & cream, gold finish.</p>
@@ -541,7 +646,7 @@ footer {
     </div>
 </section>
 
-<!-- MAP SECTION - Updated location (Shop TF-24, Noida) -->
+<!-- MAP SECTION - Updated location -->
 <section id="location" class="map-section">
     <h2>📍 Our Golden Address</h2>
     <div class="address-royal">
@@ -578,12 +683,51 @@ footer {
     <p style="margin-top: 8px; font-size: 0.7rem;"><i class="fas fa-gem" style="color:#D4AF37;"></i> Where Every Bite Feels Like a Royal Feast</p>
 </footer>
 
-<!-- FLOATING CIRCULAR WHATSAPP BUTTON (right lower corner) -->
+<!-- FLOATING WHATSAPP BUTTON -->
 <a href="https://wa.me/9188557855731" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Order on WhatsApp">
     <i class="fab fa-whatsapp"></i>
 </a>
 
 <script>
+// Hamburger Toggle Logic for Mobile
+const hamburger = document.getElementById('hamburgerBtn');
+const mobileNav = document.getElementById('mobileNav');
+const overlay = document.getElementById('navOverlay');
+const closeBtn = document.getElementById('closeNavBtn');
+
+function openMenu() {
+    mobileNav.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden'; // prevent background scroll
+}
+
+function closeMenu() {
+    mobileNav.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+hamburger.addEventListener('click', openMenu);
+closeBtn.addEventListener('click', closeMenu);
+overlay.addEventListener('click', closeMenu);
+
+// Close menu when clicking on any mobile nav link
+const mobileLinks = document.querySelectorAll('.mobile-link');
+mobileLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        closeMenu();
+        // Smooth scroll to section after closing
+        const targetId = this.getAttribute('href');
+        if(targetId && targetId !== '#') {
+            e.preventDefault();
+            const targetElement = document.querySelector(targetId);
+            if(targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    });
+});
+
 // Disable right click & inspect tools
 document.addEventListener("contextmenu", function(e) {
     e.preventDefault();
@@ -620,8 +764,7 @@ document.addEventListener("keyup", function(e) {
     }
 });
 
-// Touch optimization for mobile
-console.log("%c✨ Punjabi Khana | Black & Gold Royal Theme | Mobile Optimized", "color: #D4AF37; font-size: 14px;");
+console.log("%c✨ Punjabi Khana | Hamburger Menu + Black & Gold Royal Theme | Fully Responsive", "color: #D4AF37; font-size: 14px;");
 </script>
 </body>
 </html>
